@@ -1,0 +1,47 @@
+<img 
+    src="/assets/svgs/sidebar-logo.svg"  
+    alt="logo"
+    class="ml16 mb20"
+>
+
+<nav class="mb20">
+    <ul class="main-menu-list">
+        <li *ngFor="let item of menuItems">
+            <button 
+                class="menu-item" 
+                [routerLink]="[item.link]"
+                routerLinkActive="active"                
+            >
+                <svg [icon]="item.icon"></svg>
+                {{ item.label }}
+            </button>
+        </li>
+    </ul>
+</nav>
+<div class="subscibers__wrap">
+    <p class="medium-text mb20">Подписчики</p>
+    
+    @for (subscriber of subscribers$ | async; track subscriber.id) {
+        <app-subscriber-card
+        [profile]="subscriber"
+        ></app-subscriber-card>
+    }
+    
+    <div class="mt20 to-subscribers">
+        <a [routerLink]="['/subscribers']" class="to-subscribers-link medium-text">
+            Все Подписчики
+        </a>
+        <svg icon="arrow" class="to-subscribers-icon"></svg>
+    </div>
+</div>
+
+<footer class="sidebar__footer">
+    @if (me(); as me) {
+        <app-avatar-circle [avatarUrl]="me.avatarUrl" class="size32"></app-avatar-circle>
+        <div class="medium-text username-text">{{ me.username }}</div>
+
+        <a [routerLink]="['settings']" class="settings-btn">
+            <svg icon="settings"></svg>
+        </a>
+    }
+</footer>
