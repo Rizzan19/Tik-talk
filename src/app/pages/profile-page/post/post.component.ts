@@ -7,11 +7,12 @@ import {DatePipe} from "@angular/common";
 import { SvgIconComponent } from "../../../common-ui/svg-icon/svg-icon.component";
 import { PostInputComponent } from "../post-input/post-input.component";
 import { CommentComponent } from "./comment/comment.component";
+import {DatePostPipe} from "../../../helpers/pipes/date-post.pipe";
 
 @Component({
   selector: 'app-post',
   standalone: true,
-  imports: [AvatarCircleComponent, DatePipe, SvgIconComponent, PostInputComponent, CommentComponent],
+  imports: [AvatarCircleComponent, DatePipe, SvgIconComponent, PostInputComponent, CommentComponent, DatePostPipe],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })

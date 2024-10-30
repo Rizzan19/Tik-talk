@@ -6,7 +6,7 @@
             <div class="post-header__main">
                 <strong class="post__author">
                     {{ post.author.firstName }} {{ post.author.lastName }}
-                    <span class="post-created-at">{{ post.createdAt | date: 'HH:mm dd.MM.YYYY' }}</span>
+                    <span class="post-created-at">{{ post.createdAt | datePost }}</span>
                 </strong>
                 <p class="medium-text mt12">{{ post.content }}</p>
             </div>
