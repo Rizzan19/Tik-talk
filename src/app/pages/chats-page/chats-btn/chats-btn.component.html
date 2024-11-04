@@ -6,6 +6,6 @@
             <span>{{ chat.userFrom.firstName }} {{ chat.userFrom.lastName }}</span>
             <span>{{ chat.createdAt | date: 'dd.MM.YY' }}</span>
         </div>
-        <div class="medium-text">{{ chat.message ?? '...' }}</div>
+        <p class="medium-text last-message__text">{{ chat.message ?? '...' }}</p>
     </div>
 }

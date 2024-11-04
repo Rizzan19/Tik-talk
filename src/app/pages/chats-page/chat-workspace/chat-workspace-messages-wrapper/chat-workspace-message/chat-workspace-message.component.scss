@@ -2,6 +2,7 @@
   display: grid;
   grid-template-columns: 32px 1fr;
   grid-gap: 12px;
+  overflow: hidden;
 
   &.is-mine {
     place-content: end;
@@ -41,7 +42,9 @@
 
 .message-text {
   padding: 8px 16px;
-  width: fit-content;
+  width: max-content;
+  word-break: break-word;
+  max-width: 600px;
   background: var(--dark-message-color);
   clip-path: polygon(10px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 10px);
 }
