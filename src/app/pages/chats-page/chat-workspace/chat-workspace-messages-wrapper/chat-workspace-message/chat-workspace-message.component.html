@@ -1,0 +1,16 @@
+@if (message(); as message) {
+    <app-avatar-circle
+        class="size32"
+        [avatarUrl]="message.user!.avatarUrl"
+    ></app-avatar-circle>
+    <div class="message-container">
+        <div class="mb8">
+            <strong class="title-text"> {{ message.user?.firstName }} {{ message.user?.lastName }} </strong>
+            <strong class="regular mb8">{{message.createdAt | date: 'hh:MM'}}</strong>
+        </div>
+        <div class="message-text medium-text">
+            {{ message.text }}
+        </div>
+    </div>
+}
+

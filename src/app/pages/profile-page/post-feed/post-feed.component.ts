@@ -20,9 +20,11 @@ export class PostFeedComponent {
 
   constructor() {
     firstValueFrom(this.postService.fetchPosts())
+    this.resizeFeed()
   }
 
   ngAfterViewInit() {
+    this.resizeFeed()
     fromEvent(window, 'resize')
         .pipe(
             audit(() => interval(50))

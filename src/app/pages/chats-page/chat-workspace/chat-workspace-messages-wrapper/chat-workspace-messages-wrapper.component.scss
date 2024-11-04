@@ -1,0 +1,11 @@
+:host {
+  padding: 16px 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.messages-wrapper {
+  display: grid;
+  grid-gap: 12px;
+}

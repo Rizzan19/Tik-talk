@@ -1,0 +1,50 @@
+:host {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 12px;
+
+  &.is-mine {
+    place-content: end;
+    grid-template-columns: max-content 32px;
+
+    .message-container {
+      display: grid;
+      justify-items: end;
+      order: -1;
+    }
+
+    .message-text {
+      background: var(--primary-color);
+      color: var(--dark-color);
+      clip-path: polygon(0% 0%, calc(100% - 10px) 0%, 100% 10px, 100% 100%, 0% 100%);
+    }
+  }
+}
+
+.title-text {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+}
+
+.regular {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+}
+
+.medium-text {
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--light-color);
+}
+
+.message-text {
+  padding: 8px 16px;
+  width: fit-content;
+  background: var(--dark-message-color);
+  clip-path: polygon(10px 0%, 100% 0%, 100% 100%, 0% 100%, 0% 10px);
+}
+
+
+

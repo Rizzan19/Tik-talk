@@ -1,6 +1,7 @@
 @if (profile) {
   <div class="profile-card">
     <div class="avatar-name">
+
       <img 
         [src]="profile.avatarUrl | imgUrl" 
         alt="avatar" 
@@ -25,7 +26,7 @@
         Подписаться
         <svg icon="sub" class="svg16"></svg>
       </button>
-      <button class="btn profile-card__action-btn__link">
+      <button class="btn profile-card__action-btn__link" [routerLink]="['/profile', profile.id]">
         <svg icon="arrowDiagon" class="svg16"></svg>
       </button>
     </div>

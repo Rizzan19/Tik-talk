@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormBuilder } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { ProfileService } from '../../../data/services/profile.service';
 import { debounceTime, startWith, switchMap } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';

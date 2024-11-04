@@ -10,4 +10,5 @@ import { ImgUrlPipe } from "../../helpers/pipes/img-url.pipe";
 })
 export class AvatarCircleComponent {
   avatarUrl = input<string | null>()
+
 }

@@ -6,8 +6,11 @@
   --light-color: #FFFFFF;
   --primary-color: #AE7AFF;
   --gray-color: #5F646D;
+  --dark-message-color: #404040;
   --dark-hover-color: #161616;
   --light-transparent-color: rgba(255, 255, 255, 0.75);
+
+  --light-border: 1px solid var(--light-color);
 }
 
 *,
@@ -177,6 +180,7 @@ body {
   left: 310px;
   right: 10px;
   height: 130px;
+  pointer-events: none;
   background: linear-gradient(0deg, #141414 39.11%, rgba(18, 18, 18, 0.0001) 100%);
 }
 

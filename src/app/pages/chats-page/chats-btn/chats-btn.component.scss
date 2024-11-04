@@ -1,0 +1,30 @@
+:host {
+  padding: 24px 20px;
+  background: none;
+  border: none;
+  border-bottom: var(--light-border);
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 16px;
+  width: 100%;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible,
+  &.active {
+    background: var(--dark-hover-color);
+  }
+}
+
+.last-message__wrapper {
+  display: grid;
+  grid-gap: 16px;
+  color: var(--light-color);
+  text-align: start;
+}
+
+.last-message__header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--light-transparent-color);
+}

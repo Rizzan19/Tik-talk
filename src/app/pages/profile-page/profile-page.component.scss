@@ -14,11 +14,13 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    width: 190px;
+    width: fit-content;
     margin-right: 160px;
     text-decoration: none;
     align-items: center;
 }
+
+
 
 .to-settings-icon {
     color: var(--dark-color);

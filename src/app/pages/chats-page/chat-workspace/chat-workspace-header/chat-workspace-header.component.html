@@ -1,0 +1,22 @@
+@if (profile(); as profile) {
+
+    <button
+        class="workspace-header__btn"
+        type="button"
+    >
+        <svg icon="arrow" class="workspace-header__btn__arrow svg16"></svg>
+    </button>
+    <div class="main-content">
+        <app-avatar-circle
+            class="size32"
+            [avatarUrl]="profile.avatarUrl"
+        ></app-avatar-circle>
+        <div class="workspace-header__user">{{ profile.firstName }} {{ profile.lastName }}</div>
+    </div>
+    <button
+        class="workspace-header__btn"
+        type="button"
+    >
+        <svg icon="chat-setting" class="svg16"></svg>
+    </button>
+}

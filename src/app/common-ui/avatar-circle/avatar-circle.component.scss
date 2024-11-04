@@ -5,6 +5,8 @@ img {
 }
 
 :host.size32 {
+    height: 32px;
+    width: 32px;
     img {
         height: 32px;
         width: 32px;

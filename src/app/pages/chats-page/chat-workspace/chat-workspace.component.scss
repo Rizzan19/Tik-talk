@@ -1,0 +1,9 @@
+:host {
+  display: grid;
+  grid-template-rows: 76px 1fr;
+  height: 100%;
+}
+
+.chat-workspace {
+  color: var(--light-color);
+}
