@@ -1,10 +1,9 @@
-import {Component, ElementRef, inject, input, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, inject, input, Renderer2} from '@angular/core';
 import {ChatWorkspaceMessageComponent} from "./chat-workspace-message/chat-workspace-message.component";
 import {MessageInputComponent} from "../../../../common-ui/message-input/message-input.component";
 import {ChatsService} from "../../../../data/services/chats.service";
 import {Chat} from "../../../../data/interfaces/chat.interface";
-import {audit, firstValueFrom, fromEvent, interval} from "rxjs";
-import {resolve} from "@angular/compiler-cli";
+import {audit, firstValueFrom, fromEvent, interval, map, timer} from "rxjs";
 
 @Component({
   selector: 'app-chat-workspace-messages-wrapper',
@@ -33,9 +32,17 @@ export class ChatWorkspaceMessagesWrapperComponent {
     this.scrollBottom()
   }
 
+  async updateChat () {
+    await firstValueFrom(this.chatsService.getChatById(this.chat().id))
+  }
+
+
   ngAfterViewInit() {
     this.resizeMessages()
     this.scrollBottom()
+
+    timer(5000, 5000).subscribe(() => this.updateChat())
+
     fromEvent(window, 'resize')
         .pipe(
             audit(() => interval(50))
@@ -45,14 +52,10 @@ export class ChatWorkspaceMessagesWrapperComponent {
         })
   }
 
-  ngAfterViewChecked() {
-    this.scrollBottom();
-  }
-
   resizeMessages() {
     const {top} = this.elRef.nativeElement.getBoundingClientRect()
 
-    const width = this.elRef.nativeElement.offsetWidth - 20
+    const width = this.elRef.nativeElement.offsetWidth - 26
 
     const height = window.innerHeight - top - 130
 
