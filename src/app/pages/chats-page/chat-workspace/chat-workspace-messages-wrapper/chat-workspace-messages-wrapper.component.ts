@@ -1,10 +1,9 @@
-import {Component, ElementRef, inject, input, Renderer2, signal} from '@angular/core';
+import {Component, ElementRef, inject, input, Renderer2} from '@angular/core';
 import {ChatWorkspaceMessageComponent} from "./chat-workspace-message/chat-workspace-message.component";
 import {MessageInputComponent} from "../../../../common-ui/message-input/message-input.component";
 import {ChatsService} from "../../../../data/services/chats.service";
-import {Chat, Message} from "../../../../data/interfaces/chat.interface";
+import {Chat} from "../../../../data/interfaces/chat.interface";
 import {audit, firstValueFrom, fromEvent, interval, timer} from "rxjs";
-import {DateTime} from "luxon";
 import {KeyValuePipe} from "@angular/common";
 
 @Component({
@@ -45,10 +44,11 @@ export class ChatWorkspaceMessagesWrapperComponent {
   ngAfterViewChecked() {
       this.scrollBottom()
   }
+  ngOnInit() {
+    this.resizeMessages()
+  }
 
   ngAfterViewInit() {
-    this.resizeMessages()
-
     timer(0, 30000).subscribe(() => this.updateChat())
 
     fromEvent(window, 'resize')
@@ -63,7 +63,7 @@ export class ChatWorkspaceMessagesWrapperComponent {
   resizeMessages() {
     const {top} = this.elRef.nativeElement.getBoundingClientRect()
 
-    const width = this.elRef.nativeElement.offsetWidth - 26
+    const width = this.elRef.nativeElement.offsetWidth - 36
 
     const height = window.innerHeight - top - 130
 
