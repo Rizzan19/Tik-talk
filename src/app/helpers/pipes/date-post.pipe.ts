@@ -7,7 +7,8 @@ import {DateTime} from "luxon";
 })
 export class DatePostPipe implements PipeTransform {
     transform(value: string): string | null {
-        const dt = DateTime.fromISO(value).plus({hours: 3})
+        const dt = DateTime.fromISO(value, {zone: 'utc'}).setZone(DateTime.local().zone)
         return dt.toRelative() || ''
     }
 }
+

@@ -16,10 +16,25 @@
 
     .message-text {
       background: var(--primary-color);
-      color: var(--dark-color);
       clip-path: polygon(0% 0%, calc(100% - 10px) 0%, 100% 10px, 100% 100%, 0% 100%);
     }
+
+    .medium-text {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 21px;
+      color: var(--dark-color);
+    }
+
+    .regular {
+      order: -1;
+    }
   }
+}
+
+.message-title {
+  display: flex;
+  gap: 4px;
 }
 
 .title-text {
@@ -36,6 +51,7 @@
 
 .medium-text {
   font-size: 14px;
+  font-weight: 500;
   line-height: 21px;
   color: var(--light-color);
 }

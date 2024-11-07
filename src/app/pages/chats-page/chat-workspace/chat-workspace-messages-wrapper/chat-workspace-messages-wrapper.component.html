@@ -1,8 +1,13 @@
 <div class="messages-wrapper">
-    @for (message of messages(); track message.id) {
-        <app-chat-workspace-message
-            [message]="message"
-        ></app-chat-workspace-message>
+    @for (day of messages() | keyvalue; track day.key) {
+        <div class="day-wrapper">
+            <div class="day">{{ day.key }}</div>
+                @for (message of day.value; track message.id) {
+                    <app-chat-workspace-message
+                        [message]="message"
+                    ></app-chat-workspace-message>
+                }
+        </div>
     }
 </div>
 

@@ -1,16 +1,19 @@
-import {Component, ElementRef, inject, input, Renderer2} from '@angular/core';
+import {Component, ElementRef, inject, input, Renderer2, signal} from '@angular/core';
 import {ChatWorkspaceMessageComponent} from "./chat-workspace-message/chat-workspace-message.component";
 import {MessageInputComponent} from "../../../../common-ui/message-input/message-input.component";
 import {ChatsService} from "../../../../data/services/chats.service";
-import {Chat} from "../../../../data/interfaces/chat.interface";
-import {audit, firstValueFrom, fromEvent, interval, map, timer} from "rxjs";
+import {Chat, Message} from "../../../../data/interfaces/chat.interface";
+import {audit, firstValueFrom, fromEvent, interval, timer} from "rxjs";
+import {DateTime} from "luxon";
+import {KeyValuePipe} from "@angular/common";
 
 @Component({
   selector: 'app-chat-workspace-messages-wrapper',
   standalone: true,
   imports: [
     ChatWorkspaceMessageComponent,
-    MessageInputComponent
+    MessageInputComponent,
+    KeyValuePipe
   ],
   templateUrl: './chat-workspace-messages-wrapper.component.html',
   styleUrl: './chat-workspace-messages-wrapper.component.scss'
@@ -24,24 +27,29 @@ export class ChatWorkspaceMessagesWrapperComponent {
 
   messages = this.chatsService.activeChatMessages
 
+
   async onSendMessage(messageText: string) {
     await firstValueFrom(this.chatsService.sendMessage(this.chat().id, messageText))
 
     await firstValueFrom(this.chatsService.getChatById(this.chat().id))
-    
-    this.scrollBottom()
   }
 
   async updateChat () {
     await firstValueFrom(this.chatsService.getChatById(this.chat().id))
   }
 
+  scrollBottom() {
+    this.elRef.nativeElement.scrollTop = this.elRef.nativeElement.scrollHeight
+  }
+
+  ngAfterViewChecked() {
+      this.scrollBottom()
+  }
 
   ngAfterViewInit() {
     this.resizeMessages()
-    this.scrollBottom()
 
-    timer(5000, 5000).subscribe(() => this.updateChat())
+    timer(0, 30000).subscribe(() => this.updateChat())
 
     fromEvent(window, 'resize')
         .pipe(
@@ -61,9 +69,5 @@ export class ChatWorkspaceMessagesWrapperComponent {
 
     this.r2.setStyle(this.elRef.nativeElement, 'height', `${height}px`)
     this.r2.setStyle(this.elRef.nativeElement.querySelector('app-message-input'), 'width', `${width}px`)
-  }
-
-  scrollBottom() {
-    this.elRef.nativeElement.scrollTop = this.elRef.nativeElement.scrollHeight
   }
 }

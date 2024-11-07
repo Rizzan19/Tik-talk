@@ -30,7 +30,25 @@
 }
 
 .last-message__text {
-  text-overflow: clip;
-  -webkit-line-clamp: 2;
-  overflow-wrap: break-word;
+  //text-overflow: clip;
+  //text-overflow: ellipsis;
+  //-webkit-line-clamp: 2;
+  //overflow-wrap: break-word;
+}
+
+.last-message__main {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.last-message__unreadMessages {
+  background: var(--primary-color);
+  color: var(--dark-color);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  width: max-content;
+  padding: 1px 5px;
+  height: min-content;
 }

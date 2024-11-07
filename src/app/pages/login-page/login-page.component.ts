@@ -12,7 +12,7 @@ import { SvgIconComponent } from '../../common-ui/svg-icon/svg-icon.component';
   styleUrl: './login-page.component.scss'
 })
 export class LoginPageComponent {
-  authServise = inject(AuthService)
+  authService = inject(AuthService)
   router = inject(Router)
 
   isPasswordVisible = signal<boolean>(false)
@@ -27,10 +27,9 @@ export class LoginPageComponent {
   handleSubmit() {
     if (this.form.valid) {
       //@ts-ignore
-      this.authServise.login(this.form.value)
+      this.authService.login(this.form.value)
         .subscribe(res => {
           this.router.navigate(['/'])
-          console.log(res)
         })
     }
   }
