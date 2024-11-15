@@ -1,0 +1,24 @@
+:host {
+  border-right: var(--light-border);
+}
+
+.chats-filters-input__wrapper {
+  height: 76px;
+  position: relative;
+  padding: 16px 20px;
+  border-bottom: var(--light-border);
+
+  .tt-form-input {
+    height: 44px;
+    &::placeholder {
+      color: var(--light-transparent-color);
+    }
+  }
+}
+
+.chats-filters-input__icon {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}

@@ -1,0 +1,8 @@
+@if (profile) {
+<img
+  class="subscriber-avatar"
+  [src]="profile.avatarUrl | imgUrl"
+  [alt]="profile.lastName"
+/>
+<strong class="subtitle">{{ profile.firstName }} {{ profile.lastName }}</strong>
+}

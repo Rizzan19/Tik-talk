@@ -1,0 +1,54 @@
+:host {
+  padding: 24px 20px;
+  background: none;
+  border: none;
+  border-bottom: var(--light-border);
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  grid-gap: 16px;
+  width: 100%;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible,
+  &.active {
+    background: var(--dark-hover-color);
+  }
+}
+
+.last-message__wrapper {
+  display: grid;
+  grid-gap: 16px;
+  color: var(--light-color);
+  text-align: start;
+}
+
+.last-message__header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--light-transparent-color);
+}
+
+.last-message__text {
+  //text-overflow: clip;
+  //text-overflow: ellipsis;
+  //-webkit-line-clamp: 2;
+  //overflow-wrap: break-word;
+}
+
+.last-message__main {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.last-message__unreadMessages {
+  background: var(--primary-color);
+  color: var(--dark-color);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  width: max-content;
+  padding: 1px 5px;
+  height: min-content;
+}

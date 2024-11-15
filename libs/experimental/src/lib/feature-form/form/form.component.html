@@ -1,0 +1,146 @@
+<h4 class="h1 mb20">Оформление заказа</h4>
+
+<form class="form" [formGroup]="form" (ngSubmit)="onSubmit($event)">
+  <label class="form-label">
+    Имя
+    <input
+      formControlName="firstName"
+      class="form-input"
+      placeholder="Введите имя"
+      type="text"
+    />
+  </label>
+
+  @if (form.controls.firstName.touched &&
+  form.controls.firstName.hasError('nameValid')) {
+  <small>{{ form.controls.firstName.getError('nameValid')?.message }}</small>
+  } @if (form.controls.firstName.touched &&
+  form.controls.firstName.hasError('startsWith')) {
+  <small>{{ form.controls.firstName.getError('startsWith')?.message }}</small>
+  }
+
+  <label class="form-label">
+    Фамилия
+    <input
+      formControlName="lastName"
+      class="form-input"
+      placeholder="Введите фамилию"
+      type="text"
+    />
+  </label>
+  <label class="form-label">
+    Номер телефона
+    <input
+      formControlName="phone"
+      type="text"
+      class="form-input"
+      [maskito]="options"
+      placeholder="Введите номер"
+    />
+  </label>
+  <label class="form-label">
+    Тип доставки
+    <select formControlName="deliveryType" class="form-input input-select">
+      <option [value]="DeliveryType.COURIER">Курьер</option>
+      <option [value]="DeliveryType.PICKUP">Самовывоз</option>
+    </select>
+  </label>
+  @if (form.controls.deliveryType.value === DeliveryType.PICKUP) {
+  <div class="pickUpButtons">
+    <h4 class="h4 mb8">Пункты выдачи</h4>
+    <button
+      type="button"
+      class="pickUpBtn"
+      [class.active]="isActiveBtn() === 'first'"
+      (click)="isActiveBtn.set('first')"
+    >
+      Санкт-Петербург, улица Ленсовета, 39
+    </button>
+    <button
+      type="button"
+      class="pickUpBtn"
+      [class.active]="isActiveBtn() === 'second'"
+      (click)="isActiveBtn.set('second')"
+    >
+      Санкт-Петербург, улица Орджоникидзе, 27
+    </button>
+  </div>
+
+  } @else if (form.controls.deliveryType.value === DeliveryType.COURIER) {
+  <div class="address-title mt32 mb32">
+    <h4 class="h4">Адрес доставки</h4>
+    <span [class.full]="maxAddress()" class="max-address"
+      >Максимальное кол-во - 3!</span
+    >
+    <button class="button btnPlus" type="button" (click)="addAddress()">
+      +
+    </button>
+  </div>
+  @for (group of form.controls.address.controls; track group; let i = $index) {
+
+  <div class="form-address mb20" [formGroup]="group">
+    <label class="form-label">
+      Город
+      <input formControlName="city" placeholder="Город" class="form-input" />
+    </label>
+    <label class="form-label">
+      Улица
+      <input formControlName="street" placeholder="Улица" class="form-input" />
+    </label>
+    <label class="form-label">
+      Дом
+      <input formControlName="building" placeholder="Дом" class="form-input" />
+    </label>
+    <label class="form-label">
+      Квартира
+      <input
+        formControlName="apartment"
+        placeholder="Квартира"
+        class="form-input"
+      />
+    </label>
+    <button class="button" type="button" (click)="removeAddress(i)">
+      Удалить
+    </button>
+  </div>
+  } } @if (form.controls.deliveryType.value === DeliveryType.COURIER) {
+  <h4 class="h4 mb12">Период доставки</h4>
+  <div class="date-range" [formGroup]="form.controls.dateRange">
+    <label class="form-label">
+      От
+      <input formControlName="from" type="date" class="form-input" />
+    </label>
+    <label class="form-label">
+      До
+      <input formControlName="to" type="date" class="form-input" />
+    </label>
+  </div>
+  @if (form.controls.dateRange.hasError('dateRange')) {
+  <small>{{ form.controls.dateRange.getError('dateRange')?.message }}</small>
+  } } @else {
+  <div [formGroup]="form.controls.feature">
+    <h4 class="h4 mb20">Доп. услуги</h4>
+
+    <div style="display: grid; grid-gap: 15px" class="mb32">
+      @for (control of form.controls.feature.controls | keyvalue: sort; track
+      control; let i = $index) {
+      <label class="custom-checkbox">
+        <input
+          type="checkbox"
+          [name]="control.key"
+          (change)="onCheckboxChange(control.key)"
+          [formControlName]="control.key"
+        />
+        <span class="checkmark"></span>
+        {{ features[i].label }}
+      </label>
+      }
+    </div>
+  </div>
+  <h6 class="h6">Дата доставки: {{ dateDelivery() }}</h6>
+  }
+  <div class="submitBtn-wrapper">
+    <button type="submit" class="button submitBtn mt32">Подтвердить</button>
+  </div>
+</form>
+<h6 class="h6 mt20 valid">Форма отправлена</h6>

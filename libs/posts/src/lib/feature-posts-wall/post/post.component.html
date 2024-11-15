@@ -1,0 +1,54 @@
+@if(post(); as post) {
+<app-avatar-circle
+  [avatarUrl]="post.author.avatarUrl"
+  class="size32"
+></app-avatar-circle>
+
+<main class="post-body">
+  <div class="post-header">
+    <div class="post-header__main">
+      <strong class="post__author">
+        {{ post.author.firstName }} {{ post.author.lastName }}
+        <span class="post-created-at">{{ post.createdAt | datePost }}</span>
+      </strong>
+      <p class="medium-text mt12">{{ post.content }}</p>
+    </div>
+    <div class="post-header__burger">
+      <button
+        class="burgerButton"
+        type="button"
+        (click)="isBurgerMenuOpened.set(!isBurgerMenuOpened())"
+      >
+        <svg icon="burgerPost" class="svg16"></svg>
+      </button>
+      <div
+        class="post-header__burger__delete"
+        [class.open]="isBurgerMenuOpened()"
+      >
+        <a class="deleteButton" (click)="onDeletePost(post.id)">Удалить</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="post-counters">
+    <div class="post-counters__comments">
+      <svg icon="comments"></svg>
+      <span>{{ post.comments.length }}</span>
+    </div>
+    <div class="post-counters__likes">
+      <svg icon="likes"></svg>
+      <span>{{ post.likes }}</span>
+    </div>
+  </div>
+  @if (post.comments.length) {
+  <div class="post__comments-wrapper">
+    @for (comment of post.comments; track comment.id) {
+    <app-comment [comment]="comment"></app-comment>
+    }
+  </div>
+  }
+  <div class="post__self-comment">
+    <app-post-input [postId]="post.id" [isCommentInput]="true"></app-post-input>
+  </div>
+</main>
+}

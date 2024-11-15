@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "start": "nx run tik-talk:serve",
+    "build": "nx build",
+    "watch": "nx build --watch --configuration development",
+    "test": "nx test"
   },
   "private": true,
   "dependencies": {
@@ -18,6 +18,9 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
+    "@maskito/angular": "^3.2.0",
+    "@maskito/core": "^3.2.0",
+    "@maskito/kit": "^3.2.0",
     "luxon": "^3.5.0",
     "ngx-cookie-service": "^18.0.0",
     "rxjs": "~7.8.0",
@@ -26,16 +29,35 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.5",
+    "@angular-devkit/core": "^18.2.5",
+    "@angular-devkit/schematics": "^18.2.5",
     "@angular/cli": "^18.2.5",
     "@angular/compiler-cli": "^18.2.0",
+    "@eslint/js": "^9.8.0",
+    "@nx/angular": "20.1.0",
+    "@nx/eslint": "20.1.0",
+    "@nx/eslint-plugin": "20.1.0",
+    "@nx/js": "20.1.0",
+    "@nx/workspace": "20.1.0",
+    "@schematics/angular": "^18.2.5",
+    "@swc-node/register": "~1.9.1",
+    "@swc/core": "~1.5.7",
+    "@swc/helpers": "~0.5.11",
     "@types/jasmine": "~5.1.0",
     "@types/luxon": "^3.4.2",
+    "@typescript-eslint/utils": "^8.0.0",
+    "angular-eslint": "^18.3.0",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.0.0",
     "jasmine-core": "~5.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.5.2"
+    "nx": "20.1.0",
+    "prettier": "^2.6.2",
+    "typescript": "~5.5.2",
+    "typescript-eslint": "^8.0.0"
   }
 }
