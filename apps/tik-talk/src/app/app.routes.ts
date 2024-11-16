@@ -3,7 +3,10 @@ import { LoginPageComponent, canActivateAuth } from '@tt/auth';
 import { chatsRoutes } from '@tt/chats';
 import { FormsExperimentalComponent, FormComponent } from '@tt/experimental';
 import {LayoutComponent} from "@tt/layout";
-import { SearchPageComponent, ProfilePageComponent, SettingsPageComponent } from '@tt/profile';
+import {SearchPageComponent, ProfilePageComponent, SettingsPageComponent, ProfileEffects} from '@tt/profile';
+import {profileFeature} from "@tt/profile";
+import {provideState} from "@ngrx/store";
+import {provideEffects} from "@ngrx/effects";
 
 export const routes: Routes = [
   {
@@ -13,7 +16,14 @@ export const routes: Routes = [
       { path: '', redirectTo: 'profile/me', pathMatch: 'full' },
       { path: 'profile/:id', component: ProfilePageComponent },
       { path: 'settings', component: SettingsPageComponent },
-      { path: 'search', component: SearchPageComponent },
+      {
+        path: 'search',
+        component: SearchPageComponent,
+        providers: [
+            provideState(profileFeature),
+            provideEffects(ProfileEffects)
+        ]
+      },
       {
         path: 'chats',
         loadChildren: () => chatsRoutes,
