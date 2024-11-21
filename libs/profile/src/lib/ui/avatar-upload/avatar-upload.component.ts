@@ -1,6 +1,5 @@
-import { Component, signal } from '@angular/core';
-import { SvgIconComponent } from '@tt/common-ui';
-import { DndDirective } from '../../../../../common-ui/src/lib/directives/dnd.directive';
+import {Component, inject, input, signal} from '@angular/core';
+import { SvgIconComponent, DndDirective } from '@tt/common-ui';
 
 @Component({
   selector: 'app-avatar-upload',
@@ -10,7 +9,8 @@ import { DndDirective } from '../../../../../common-ui/src/lib/directives/dnd.di
   styleUrl: './avatar-upload.component.scss',
 })
 export class AvatarUploadComponent {
-  preview = signal<string>('/assets/imgs/avatar-placeholder-big.png');
+  avatarUrl = input()
+  preview = signal<string | null>('/assets/imgs/avatar-placeholder-big.png');
 
   avatar: File | null = null;
 
@@ -35,5 +35,9 @@ export class AvatarUploadComponent {
 
     reader.readAsDataURL(file);
     this.avatar = file;
+  }
+
+  ngOnInit() {
+    this.preview.set('https://icherniakov.ru/yt-course/' + this.avatarUrl())
   }
 }

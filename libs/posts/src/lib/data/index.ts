@@ -1,5 +1,6 @@
 import { PostService } from "./services/post.service";
-import { Post, PostComment } from "./interfaces/post.interface";
+import { Post, PostComment } from "@tt/interfaces/posts/post.interface";
+export * from './store'
 
 export {
     type Post,

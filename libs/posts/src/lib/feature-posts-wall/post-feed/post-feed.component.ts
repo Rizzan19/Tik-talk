@@ -1,8 +1,9 @@
-import { Component, ElementRef, Renderer2, inject } from '@angular/core';
+import {Component, ElementRef, Renderer2, inject, ViewChild} from '@angular/core';
 import { PostInputComponent } from '../../ui';
 import { PostComponent } from '../post/post.component';
-import { PostService } from '../../data';
-import { audit, firstValueFrom, fromEvent, interval } from 'rxjs';
+import {postActions, selectPosts} from '../../data';
+import { audit, fromEvent, interval } from 'rxjs';
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-post-feed',
@@ -12,15 +13,15 @@ import { audit, firstValueFrom, fromEvent, interval } from 'rxjs';
   styleUrl: './post-feed.component.scss',
 })
 export class PostFeedComponent {
-  postService = inject(PostService);
-  feed = this.postService.posts;
+  @ViewChild('postsWrapper') postsWrapper!: ElementRef
 
-  hostElement = inject(ElementRef);
+  store = inject(Store)
   r2 = inject(Renderer2);
 
+  feed = this.store.selectSignal(selectPosts)
+
   constructor() {
-    firstValueFrom(this.postService.fetchPosts());
-    this.resizeFeed();
+    this.store.dispatch(postActions.fetchPosts({}))
   }
 
   ngAfterViewInit() {
@@ -33,10 +34,10 @@ export class PostFeedComponent {
   }
 
   resizeFeed() {
-    const { top } = this.hostElement.nativeElement.getBoundingClientRect();
+    const { top } = this.postsWrapper.nativeElement.getBoundingClientRect();
 
-    const height = window.innerHeight - top - 24 - 24;
+    const height = window.innerHeight - top - 48;
 
-    this.r2.setStyle(this.hostElement.nativeElement, 'height', `${height}px`);
+    this.r2.setStyle(this.postsWrapper.nativeElement, 'height', `${height}px`);
   }
 }

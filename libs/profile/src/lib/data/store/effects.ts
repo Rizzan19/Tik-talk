@@ -15,6 +15,7 @@ export class ProfileEffects {
         return this.actions$.pipe(
             ofType(profileActions.filterEvents),
             switchMap(({filters}) => {
+
                 return this.profileService.filterProfiles(filters)
             }),
             map(res => profileActions.profilesLoaded({profiles: res.items}))

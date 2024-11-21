@@ -26,7 +26,7 @@ import { GlobalStoreService } from "@tt/shared";
 export class SidebarComponent {
   profileService = inject(ProfileService);
   subscribers$ = this.profileService.getSubscribersShortList();
-  me = inject(GlobalStoreService).me;
+  me = inject(GlobalStoreService).me
 
   menuItems = [
     {
@@ -47,7 +47,6 @@ export class SidebarComponent {
   ];
 
   ngOnInit() {
-    console.log(this.profileService.getMe())
     firstValueFrom(this.profileService.getMe());
   }
 }

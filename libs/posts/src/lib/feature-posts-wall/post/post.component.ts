@@ -7,11 +7,12 @@ import {
   signal,
   ElementRef,
 } from '@angular/core';
-import { Post, PostComment, PostService } from '../../data';
+import {Post, postActions, PostComment, PostService} from '../../data';
 import { PostInputComponent, CommentComponent } from '../../ui';
 import { AvatarCircleComponent, SvgIconComponent, DatePostPipe } from '@tt/common-ui';
 import { firstValueFrom } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-post',
@@ -28,12 +29,11 @@ import { DatePipe } from '@angular/common';
   styleUrl: './post.component.scss',
 })
 export class PostComponent implements OnInit {
-  post = input<Post>();
-  postService = inject(PostService);
-  comment = signal<PostComment[]>([]);
-  isBurgerMenuOpened = signal<boolean>(false);
+  store = inject(Store)
+  eRef = inject(ElementRef)
 
-  constructor(private eRef: ElementRef) {}
+  post = input<Post>();
+  isBurgerMenuOpened = signal<boolean>(false);
 
   @HostListener('document:click', ['$event'])
   clickOutside(event: Event) {
@@ -47,14 +47,9 @@ export class PostComponent implements OnInit {
     }
   }
 
-  onDeletePost(id: number) {
-    firstValueFrom(this.postService.deletePost(id));
+  onDeletePost(postId: number) {
+    this.store.dispatch(postActions.deletePost({postId: postId}))
   }
 
-  async ngOnInit() {
-    const comments = await firstValueFrom(
-      this.postService.getCommentsByPostId(this.post()!.id)
-    );
-    this.comment.set(comments);
-  }
+  ngOnInit() {}
 }

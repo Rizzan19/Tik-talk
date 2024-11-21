@@ -5,6 +5,7 @@ import { ProfileService } from '../../data';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { SvgIconComponent } from '@tt/common-ui';
 import { AuthService } from "@tt/auth";
+import {GlobalStoreService} from "@tt/shared";
 
 @Component({
   selector: 'app-settings-page',
@@ -19,6 +20,7 @@ import { AuthService } from "@tt/auth";
   styleUrl: './settings-page.component.scss',
 })
 export class SettingsPageComponent {
+  me = inject(GlobalStoreService).me
   authService = inject(AuthService);
   fb = inject(FormBuilder);
   profileService = inject(ProfileService);
@@ -42,10 +44,6 @@ export class SettingsPageComponent {
         stack: this.mergeStack(this.profileService.me()?.stack),
       });
     });
-  }
-
-  ngAfterViewInit() {
-    this.avatarUploader.avatar;
   }
 
   onSave() {

@@ -7,6 +7,7 @@ import {SearchPageComponent, ProfilePageComponent, SettingsPageComponent, Profil
 import {profileFeature} from "@tt/profile";
 import {provideState} from "@ngrx/store";
 import {provideEffects} from "@ngrx/effects";
+import {PostEffects, postFeature} from "@tt/posts";
 
 export const routes: Routes = [
   {
@@ -14,7 +15,14 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'profile/me', pathMatch: 'full' },
-      { path: 'profile/:id', component: ProfilePageComponent },
+      {
+        path: 'profile/:id',
+        component: ProfilePageComponent,
+        providers: [
+            provideState(postFeature),
+            provideEffects(PostEffects)
+        ]
+      },
       { path: 'settings', component: SettingsPageComponent },
       {
         path: 'search',

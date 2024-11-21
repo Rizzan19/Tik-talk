@@ -30,5 +30,6 @@ export class ProfileFiltersComponent {
       .subscribe(formValue => {
         this.store.dispatch(profileActions.filterEvents({filters: formValue}))
       });
+    // this.searchForm.patchValue(this.store.selectSignal(profileActions.filterEvents{}));
   }
 }

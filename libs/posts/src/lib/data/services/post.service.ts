@@ -5,8 +5,8 @@ import {
   CommentCreateDto,
   Post,
   PostCreateDto,
-} from '../interfaces/post.interface';
-import { map, switchMap, tap } from 'rxjs';
+} from '@tt/interfaces/posts/post.interface';
+import { map, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,6 @@ import { map, switchMap, tap } from 'rxjs';
 export class PostService {
   #http = inject(HttpClient);
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
-
-  posts = signal<Post[]>([]);
 
   createPost(payload: PostCreateDto) {
     return this.#http.post<Post>(`${this.baseApiUrl}post/`, payload).pipe(
@@ -26,17 +24,11 @@ export class PostService {
   }
 
   fetchPosts() {
-    return this.#http
-      .get<Post[]>(`${this.baseApiUrl}post/`)
-      .pipe(tap((res) => this.posts.set(res)));
+    return this.#http.get<Post[]>(`${this.baseApiUrl}post/`)
   }
 
-  deletePost(id: number) {
-    return this.#http.delete<Post>(`${this.baseApiUrl}post/${id}`).pipe(
-      switchMap(() => {
-        return this.fetchPosts();
-      })
-    );
+  deletePost(postId: number) {
+    return this.#http.delete<Post>(`${this.baseApiUrl}post/${postId}`)
   }
 
   createComment(payload: CommentCreateDto) {
