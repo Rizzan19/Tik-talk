@@ -32,7 +32,7 @@ export class ChatsListComponent {
       return this.filterChartsControl.valueChanges.pipe(
         startWith(''),
         map((inputValue) => {
-          return chats.filter((chat) => {
+          return chats.reverse().filter((chat) => {
             return `${chat.userFrom.lastName} ${chat.userFrom.firstName}`
               .toLowerCase()
               .includes(inputValue?.toLowerCase() ?? '');

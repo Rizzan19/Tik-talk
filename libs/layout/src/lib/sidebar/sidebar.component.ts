@@ -6,6 +6,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { ProfileService } from "@tt/profile";
 import { GlobalStoreService } from "@tt/shared";
+import {ChatsService} from "@tt/chats";
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 
 @Component({
   selector: 'app-sidebar',
@@ -25,8 +27,18 @@ import { GlobalStoreService } from "@tt/shared";
 })
 export class SidebarComponent {
   profileService = inject(ProfileService);
-  subscribers$ = this.profileService.getSubscribersShortList();
+  #chatsService = inject(ChatsService);
   me = inject(GlobalStoreService).me
+
+  unreadMessage = this.#chatsService.unreadMessages
+  subscribers$ = this.profileService.getSubscribersShortList();
+
+
+  constructor() {
+    this.#chatsService.connectWs()
+        .pipe(takeUntilDestroyed())
+        .subscribe()
+  }
 
   menuItems = [
     {

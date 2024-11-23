@@ -6,4 +6,5 @@ import {Profile} from "@tt/interfaces/profile";
 })
 export class GlobalStoreService {
     me = signal<Profile | null>(null)
+    companion = signal<Profile | null>(null)
 }

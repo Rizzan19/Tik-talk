@@ -10,6 +10,6 @@ import {LastMessageRes} from "../../data/interfaces/chat.interface";
   templateUrl: './chats-btn.component.html',
   styleUrl: './chats-btn.component.scss',
 })
-export class ChatsBtnComponent {
+export class ChatsBtnComponent{
   chat = input<LastMessageRes>();
 }

@@ -5,6 +5,8 @@
     @for (message of day.value; track message.id) {
     <app-chat-workspace-message
       [message]="message"
+      [chat]="chat()"
+
     ></app-chat-workspace-message>
     }
   </div>

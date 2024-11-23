@@ -12,7 +12,7 @@ export class ProfileService {
   #globalStoreService = inject(GlobalStoreService)
   baseApiUrl = 'https://icherniakov.ru/yt-course/';
 
-  me = signal<Profile | null>(null);
+  me = signal<Profile | null>(null)
 
   getTestAccounts() {
     return this.http.get<Profile[]>(`${this.baseApiUrl}account/test_accounts`);
@@ -33,8 +33,11 @@ export class ProfileService {
       .pipe(map((res) => res.items.slice(0, subsAmoun)));
   }
 
-  getAccount(id: string) {
-    return this.http.get<Profile>(`${this.baseApiUrl}account/${id}`);
+  getAccount(id: number) {
+    return this.http.get<Profile>(`${this.baseApiUrl}account/${id}`)
+        .pipe(tap((res) => {
+          this.#globalStoreService.companion.set(res)
+    }));
   }
 
   patchProfile(profile: Partial<Profile>) {

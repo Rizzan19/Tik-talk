@@ -10,6 +10,9 @@
       >
         <svg [icon]="item.icon"></svg>
         {{ item.label }}
+          @if (item.label === 'Чаты' && unreadMessage() > 0) {
+              <span class="unread-messages">{{ unreadMessage() }}</span>
+          }
       </button>
     </li>
   </ul>

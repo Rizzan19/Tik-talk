@@ -102,3 +102,15 @@
     color: var(--primary-color);
   }
 }
+
+.unread-messages {
+  background: var(--primary-color);
+  color: var(--dark-color);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  width: max-content;
+  border-radius: 2px;
+  padding: 2px 10px;
+  height: min-content;
+}
