@@ -1,17 +1,8 @@
-import {
-  Component,
-  HostListener,
-  OnInit,
-  inject,
-  input,
-  signal,
-  ElementRef,
-} from '@angular/core';
-import {Post, postActions, PostComment, PostService} from '../../data';
-import { PostInputComponent, CommentComponent } from '../../ui';
-import { AvatarCircleComponent, SvgIconComponent, DatePostPipe } from '@tt/common-ui';
-import { firstValueFrom } from 'rxjs';
-import { DatePipe } from '@angular/common';
+import {Component, ElementRef, HostListener, inject, input, OnInit, signal,} from '@angular/core';
+import {Post, postActions} from '@tt/data-access/posts';
+import {CommentComponent, PostInputComponent} from '../../ui';
+import {AvatarCircleComponent, DatePostPipe, SvgIconComponent} from '@tt/common-ui';
+import {DatePipe} from '@angular/common';
 import {Store} from "@ngrx/store";
 
 @Component({

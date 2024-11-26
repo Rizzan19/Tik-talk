@@ -1,11 +1,11 @@
 import { Component, ViewChild, effect, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProfileHeaderComponent, AvatarUploadComponent } from '../../ui';
-import { ProfileService } from '../../data';
+import { ProfileService } from '@tt/data-access/profile';
 import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
 import { SvgIconComponent } from '@tt/common-ui';
-import { AuthService } from "@tt/auth";
-import {GlobalStoreService} from "@tt/shared";
+import { AuthService } from "@tt/data-access/auth";
+import {GlobalStoreService} from "@tt/data-access/shared";
 
 @Component({
   selector: 'app-settings-page',

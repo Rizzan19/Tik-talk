@@ -1,7 +1,7 @@
-import { Component, input } from '@angular/core';
-import { Profile } from '../../../../../../interfaces/src/lib/profile/profile.interface';
-import { AvatarCircleComponent } from '../../../../../../common-ui/src/lib/components/avatar-circle/avatar-circle.component';
-import { SvgIconComponent } from '../../../../../../common-ui/src/lib/components/svg-icon/svg-icon.component';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
+import { Profile } from '@tt/data-access/profile/interfaces/profile.interface';
+import { AvatarCircleComponent } from '@tt/common-ui';
+import { SvgIconComponent } from '@tt/common-ui';
 
 @Component({
   selector: 'app-chat-workspace-header',
@@ -9,6 +9,7 @@ import { SvgIconComponent } from '../../../../../../common-ui/src/lib/components
   imports: [AvatarCircleComponent, SvgIconComponent],
   templateUrl: './chat-workspace-header.component.html',
   styleUrl: './chat-workspace-header.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatWorkspaceHeaderComponent {
   profile = input.required<Profile>();

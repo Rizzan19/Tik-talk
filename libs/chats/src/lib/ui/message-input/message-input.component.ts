@@ -1,16 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  inject,
-  Output,
-  Renderer2,
-} from '@angular/core';
-import { AvatarCircleComponent } from '../../../../../common-ui/src/lib/components/avatar-circle/avatar-circle.component';
-import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
-import { SvgIconComponent } from '../../../../../common-ui/src/lib/components/svg-icon/svg-icon.component';
-import { firstValueFrom } from 'rxjs';
-import { ProfileService } from '../../../../../profile/src/lib/data/services/profile.service';
+import {ChangeDetectionStrategy, Component, EventEmitter, inject, Output, Renderer2,} from '@angular/core';
+import {AvatarCircleComponent, SvgIconComponent} from '@tt/common-ui';
+import {FormsModule} from '@angular/forms';
+import {NgIf} from '@angular/common';
+import {ProfileService} from '@tt/data-access/profile/services/profile.service';
 
 @Component({
   selector: 'app-message-input',
@@ -18,6 +10,7 @@ import { ProfileService } from '../../../../../profile/src/lib/data/services/pro
   imports: [AvatarCircleComponent, FormsModule, NgIf, SvgIconComponent],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss',
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class MessageInputComponent {
   r2 = inject(Renderer2);

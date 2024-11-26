@@ -1,3 +1,3 @@
 export * from './lib/feature-posts-wall';
-export * from './lib/data';
+export * from '@tt/data-access/posts';
 export * from './lib/ui'

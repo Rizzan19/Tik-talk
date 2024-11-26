@@ -6,7 +6,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { SvgIconComponent } from '@tt/common-ui';
 import { ImgUrlPipe } from '@tt/common-ui';
 import { PostFeedComponent } from "@tt/posts";
-import { ProfileService } from "../../data";
+import { ProfileService } from "@tt/data-access/profile";
 import { switchMap } from 'rxjs';
 
 @Component({

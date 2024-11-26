@@ -1,11 +1,11 @@
-import { Component, inject } from '@angular/core';
-import { ChatWorkspaceHeaderComponent } from './chat-workspace-header/chat-workspace-header.component';
-import { ChatWorkspaceMessagesWrapperComponent } from './chat-workspace-messages-wrapper/chat-workspace-messages-wrapper.component';
-import { MessageInputComponent } from '../../ui';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, inject} from '@angular/core';
+import {ChatWorkspaceHeaderComponent} from './chat-workspace-header/chat-workspace-header.component';
+import {ChatWorkspaceMessagesWrapperComponent} from './chat-workspace-messages-wrapper/chat-workspace-messages-wrapper.component';
+import {MessageInputComponent} from '../../ui';
 import {ActivatedRoute, Router} from '@angular/router';
-import { ChatsService } from '../../data/';
 import {filter, of, switchMap} from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import {AsyncPipe} from '@angular/common';
+import {ChatsService} from "@tt/data-access/chats";
 
 @Component({
   selector: 'app-chat-workspace',
@@ -18,11 +18,13 @@ import { AsyncPipe } from '@angular/common';
   ],
   templateUrl: './chat-workspace.component.html',
   styleUrl: './chat-workspace.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatWorkspaceComponent {
   route = inject(ActivatedRoute);
   router = inject(Router);
   chatsService = inject(ChatsService);
+  cdr = inject(ChangeDetectorRef)
 
   activeChat$ = this.route.params.pipe(
     switchMap(({ id }) => {
@@ -41,5 +43,9 @@ export class ChatWorkspaceComponent {
       }
       return this.chatsService.getChatById(id)
     })
-  );
+  )
+
+    constructor() {
+      this.cdr.markForCheck()
+    }
 }

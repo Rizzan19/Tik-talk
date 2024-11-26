@@ -1,5 +1,5 @@
 import { Component, ElementRef, inject, Renderer2 } from '@angular/core';
-import { selectFilteredProfiles} from '../../data';
+import { selectFilteredProfiles} from '@tt/data-access/profile';
 import { ProfileCardComponent } from '../../ui';
 import { RouterLink } from '@angular/router';
 import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';

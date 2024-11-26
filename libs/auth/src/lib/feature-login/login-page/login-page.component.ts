@@ -1,13 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from "../../auth/auth.service";
-import { SvgIconComponent } from "../../../../../common-ui/src";
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators,} from '@angular/forms';
+import {Router} from '@angular/router';
+// @ts-ignore
+import {SvgIconComponent} from '@tt/common-ui';
+// @ts-ignore
+import {AuthService} from "@tt/data-access/auth";
 
 @Component({
   selector: 'app-login-page',
@@ -15,6 +12,7 @@ import { SvgIconComponent } from "../../../../../common-ui/src";
   imports: [ReactiveFormsModule, SvgIconComponent],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPageComponent {
   authService = inject(AuthService);

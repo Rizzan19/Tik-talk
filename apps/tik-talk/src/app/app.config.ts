@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import {authTokenInterceptor} from "@tt/auth";
+import {authTokenInterceptor} from "@tt/data-access/auth";
 import {provideStore} from "@ngrx/store";
 import {provideEffects} from "@ngrx/effects";
 

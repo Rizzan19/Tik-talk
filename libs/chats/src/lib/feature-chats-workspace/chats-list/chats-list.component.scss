@@ -1,5 +1,13 @@
 :host {
   border-right: var(--light-border);
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.filter-wrapper {
+  position: sticky;
+  background: var(--dark-color);
+  top: 0;
 }
 
 .chats-filters-input__wrapper {

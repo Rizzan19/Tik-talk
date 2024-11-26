@@ -1,16 +1,10 @@
-import {
-  Component,
-  HostBinding,
-  Renderer2,
-  inject,
-  input,
-} from '@angular/core';
-import { AvatarCircleComponent, SvgIconComponent } from '@tt/common-ui';
-import { NgIf } from '@angular/common';
-import {postActions} from '../../data';
-import { FormsModule } from '@angular/forms';
-import { GlobalStoreService } from "@tt/shared";
+import {Component, HostBinding, inject, input, Renderer2,} from '@angular/core';
+import {AvatarCircleComponent, SvgIconComponent} from '@tt/common-ui';
+import {NgIf} from '@angular/common';
+import {postActions} from '@tt/data-access/posts';
+import {FormsModule} from '@angular/forms';
 import {Store} from "@ngrx/store";
+import {GlobalStoreService} from "@tt/data-access/shared";
 
 @Component({
   selector: 'app-post-input',

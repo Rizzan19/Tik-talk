@@ -1,7 +1,7 @@
 import {Component, ElementRef, Renderer2, inject, ViewChild} from '@angular/core';
 import { PostInputComponent } from '../../ui';
 import { PostComponent } from '../post/post.component';
-import {postActions, selectPosts} from '../../data';
+import {postActions, selectPosts} from '@tt/data-access/posts';
 import { audit, fromEvent, interval } from 'rxjs';
 import {Store} from "@ngrx/store";
 

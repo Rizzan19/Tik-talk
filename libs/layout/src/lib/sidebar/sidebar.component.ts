@@ -1,64 +1,84 @@
-import { Component, inject } from '@angular/core';
-import { SvgIconComponent, ImgUrlPipe, AvatarCircleComponent } from '@tt/common-ui';
-import { NgForOf, AsyncPipe } from '@angular/common';
-import { SubscriberCardComponent } from './subscriber-card/subscriber-card.component';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { firstValueFrom } from 'rxjs';
-import { ProfileService } from "@tt/profile";
-import { GlobalStoreService } from "@tt/shared";
-import {ChatsService} from "@tt/chats";
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
+import {AvatarCircleComponent, ImgUrlPipe, SvgIconComponent} from '@tt/common-ui';
+import {AsyncPipe, NgForOf} from '@angular/common';
+import {SubscriberCardComponent} from './subscriber-card/subscriber-card.component';
+import {RouterLink, RouterLinkActive} from '@angular/router';
+import {firstValueFrom, Subscription} from 'rxjs';
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {ChatsService} from "@tt/data-access/chats";
+import {ProfileService} from "@tt/data-access/profile";
+import {GlobalStoreService} from "@tt/data-access/shared"
+import {AuthService} from "@tt/data-access/auth";
+import {isErrorMessage} from "@tt/data-access/chats/interfaces/type-guards";
 
 @Component({
-  selector: 'app-sidebar',
-  standalone: true,
-  imports: [
-    SvgIconComponent,
-    NgForOf,
-    SubscriberCardComponent,
-    RouterLink,
-    RouterLinkActive,
-    AsyncPipe,
-    ImgUrlPipe,
-    AvatarCircleComponent,
-  ],
-  templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.scss',
+    selector: 'app-sidebar',
+    standalone: true,
+    imports: [
+        SvgIconComponent,
+        NgForOf,
+        SubscriberCardComponent,
+        RouterLink,
+        RouterLinkActive,
+        AsyncPipe,
+        ImgUrlPipe,
+        AvatarCircleComponent,
+    ],
+    templateUrl: './sidebar.component.html',
+    styleUrl: './sidebar.component.scss',
 })
-export class SidebarComponent {
-  profileService = inject(ProfileService);
-  #chatsService = inject(ChatsService);
-  me = inject(GlobalStoreService).me
+export class SidebarComponent implements OnInit {
+    profileService = inject(ProfileService);
+    #chatsService = inject(ChatsService);
+    #authService = inject(AuthService);
+    destroyRef = inject(DestroyRef)
+    me = inject(GlobalStoreService).me
 
-  unreadMessage = this.#chatsService.unreadMessages
-  subscribers$ = this.profileService.getSubscribersShortList();
 
+    unreadMessage = this.#chatsService.unreadMessages
+    subscribers$ = this.profileService.getSubscribersShortList();
 
-  constructor() {
-    this.#chatsService.connectWs()
-        .pipe(takeUntilDestroyed())
-        .subscribe()
-  }
+    wsSubscribe!: Subscription
 
-  menuItems = [
-    {
-      label: 'Моя страница',
-      icon: 'home',
-      link: 'profile/me',
-    },
-    {
-      label: 'Чаты',
-      icon: 'chat',
-      link: 'chats',
-    },
-    {
-      label: 'Поиск',
-      icon: 'search',
-      link: 'search',
-    },
-  ];
+    menuItems = [
+        {
+            label: 'Моя страница',
+            icon: 'home',
+            link: 'profile/me',
+        },
+        {
+            label: 'Чаты',
+            icon: 'chat',
+            link: 'chats',
+        },
+        {
+            label: 'Поиск',
+            icon: 'search',
+            link: 'search',
+        },
+    ];
 
-  ngOnInit() {
-    firstValueFrom(this.profileService.getMe());
-  }
+    async reconnect() {
+        await firstValueFrom(this.#authService.refreshAuthToken())
+        console.log('Я безшумно рефрешнула токен')
+        this.connection()
+    }
+
+    async connection() {
+        await firstValueFrom(this.#authService.refreshAuthToken())
+        this.wsSubscribe?.unsubscribe()
+        this.wsSubscribe = this.#chatsService.connectWs()
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((message) => {
+                if (isErrorMessage(message)) {
+                    this.reconnect()
+                }
+            })
+    }
+
+    ngOnInit() {
+        firstValueFrom(this.profileService.getMe());
+
+        this.connection()
+    }
 }

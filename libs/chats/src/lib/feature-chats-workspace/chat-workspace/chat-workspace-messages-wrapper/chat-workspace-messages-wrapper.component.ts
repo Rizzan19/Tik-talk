@@ -1,8 +1,15 @@
-import {Component, ElementRef, inject, input, Renderer2} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  inject,
+  input,
+  Renderer2
+} from '@angular/core';
 import {ChatWorkspaceMessageComponent} from './chat-workspace-message/chat-workspace-message.component';
 import {MessageInputComponent} from '../../../ui';
-import {ChatsService} from '../../../data/services/chats.service';
-import {Chat} from '../../../data/interfaces/chat.interface';
+import {Chat, ChatsService} from '@tt/data-access/chats';
 import {audit, fromEvent, interval} from 'rxjs';
 import {KeyValuePipe} from '@angular/common';
 
@@ -12,10 +19,12 @@ import {KeyValuePipe} from '@angular/common';
   imports: [ChatWorkspaceMessageComponent, MessageInputComponent, KeyValuePipe],
   templateUrl: './chat-workspace-messages-wrapper.component.html',
   styleUrl: './chat-workspace-messages-wrapper.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatWorkspaceMessagesWrapperComponent {
   chatsService = inject(ChatsService);
   elRef = inject(ElementRef);
+  cdr = inject(ChangeDetectorRef)
   r2 = inject(Renderer2);
 
   chat = input.required<Chat>();
@@ -24,6 +33,7 @@ export class ChatWorkspaceMessagesWrapperComponent {
 
   onSendMessage(messageText: string) {
     this.chatsService.wsAdapter.sendMessage(messageText, this.chat().id)
+    this.cdr.detectChanges()
   }
 
   scrollBottom() {

@@ -1,13 +1,15 @@
 import { Routes } from '@angular/router';
-import { LoginPageComponent, canActivateAuth } from '@tt/auth';
+import { canActivateAuth } from '@tt/data-access/auth';
 import { chatsRoutes } from '@tt/chats';
 import { FormsExperimentalComponent, FormComponent } from '@tt/experimental';
 import {LayoutComponent} from "@tt/layout";
-import {SearchPageComponent, ProfilePageComponent, SettingsPageComponent, ProfileEffects} from '@tt/profile';
-import {profileFeature} from "@tt/profile";
+import {SearchPageComponent, ProfilePageComponent, SettingsPageComponent} from '@tt/profile';
 import {provideState} from "@ngrx/store";
 import {provideEffects} from "@ngrx/effects";
 import {PostEffects, postFeature} from "@tt/posts";
+import {ProfileEffects, profileFeature} from "@tt/data-access/profile";
+// @ts-ignore
+import {LoginPageComponent} from "@tt/auth";
 
 export const routes: Routes = [
   {

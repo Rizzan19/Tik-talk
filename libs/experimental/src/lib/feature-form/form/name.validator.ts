@@ -6,7 +6,7 @@ import {
 import { debounceTime, map, Observable } from 'rxjs';
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Profile } from '../../../../../interfaces/src/lib/profile/profile.interface';
+import { Profile } from '@tt/data-access/profile/interfaces/profile.interface';
 
 @Injectable({ providedIn: 'root' })
 export class NameValidator implements AsyncValidator {
