@@ -1,4 +1,12 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, inject, Output, Renderer2,} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  inject,
+  Output,
+  Renderer2,
+} from '@angular/core';
 import {AvatarCircleComponent, SvgIconComponent} from '@tt/common-ui';
 import {FormsModule} from '@angular/forms';
 import {NgIf} from '@angular/common';
@@ -10,7 +18,7 @@ import {ProfileService} from '@tt/data-access/profile/services/profile.service';
   imports: [AvatarCircleComponent, FormsModule, NgIf, SvgIconComponent],
   templateUrl: './message-input.component.html',
   styleUrl: './message-input.component.scss',
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MessageInputComponent {
   r2 = inject(Renderer2);
@@ -27,10 +35,10 @@ export class MessageInputComponent {
     this.r2.setStyle(textarea, 'height', textarea.scrollHeight + 'px');
   }
 
-  onCreatePost() {
-    if (!this.postText) return;
+  onCreateMessage() {
+    if (!this.postText) return
 
-    this.created.emit(this.postText);
-    this.postText = '';
+    this.created.emit(this.postText)
+    this.postText = ''
   }
 }

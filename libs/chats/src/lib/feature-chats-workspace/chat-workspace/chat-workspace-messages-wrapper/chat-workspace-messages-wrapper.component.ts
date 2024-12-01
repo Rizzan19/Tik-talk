@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -21,39 +22,36 @@ import {KeyValuePipe} from '@angular/common';
   styleUrl: './chat-workspace-messages-wrapper.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChatWorkspaceMessagesWrapperComponent {
+export class ChatWorkspaceMessagesWrapperComponent{
   chatsService = inject(ChatsService);
   elRef = inject(ElementRef);
-  cdr = inject(ChangeDetectorRef)
   r2 = inject(Renderer2);
 
   chat = input.required<Chat>();
 
   messages = this.chatsService.activeChatMessages;
 
-  onSendMessage(messageText: string) {
-    this.chatsService.wsAdapter.sendMessage(messageText, this.chat().id)
-    this.cdr.detectChanges()
-  }
-
-  scrollBottom() {
-    this.elRef.nativeElement.scrollTop = this.elRef.nativeElement.scrollHeight;
-  }
-
-  ngAfterViewChecked() {
+  ngOnInit() {
     this.scrollBottom()
   }
 
-  ngOnInit() {
-    this.resizeMessages();
-  }
-
   ngAfterViewInit() {
+    this.resizeMessages()
+    this.scrollBottom()
     fromEvent(window, 'resize')
       .pipe(audit(() => interval(50)))
       .subscribe(() => {
         this.resizeMessages();
       });
+  }
+
+  onSendMessage(messageText: string) {
+    this.chatsService.wsAdapter.sendMessage(messageText, this.chat().id)
+    this.scrollBottom()
+  }
+
+  scrollBottom() {
+    this.elRef.nativeElement.scrollTop = this.elRef.nativeElement.scrollHeight;
   }
 
   resizeMessages() {

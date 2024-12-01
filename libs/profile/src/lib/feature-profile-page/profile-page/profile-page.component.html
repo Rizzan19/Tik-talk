@@ -17,7 +17,11 @@
 </header>
 
 <main class="profile-page__body">
-  <app-post-feed></app-post-feed>
+    @if (isMyPage()) {
+        <app-post-feed></app-post-feed>
+    } @else {
+        <div class="empty"></div>
+    }
   <div>
     <h3 class="h6 mb16">Подписчики</h3>
     <div class="subscribers-wrapper mb32">
@@ -29,7 +33,7 @@
         <img [src]="subscriber.avatarUrl | imgUrl" />
       </a>
       }
-      <a routerLink="['/search']" class="to-subscribers-search"></a>
+      <a [routerLink]="['/search']" class="to-subscribers-search"></a>
     </div>
     <h3 class="h6 mb16">Навыки</h3>
     <div class="stack-wrapper mb32">

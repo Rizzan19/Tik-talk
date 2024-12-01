@@ -11,4 +11,5 @@ import {ChatsListComponent} from '../chats-list/chats-list.component';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ChatsPageComponent {
+
 }

@@ -1,0 +1,8 @@
+<h4 class="h1 mb8">Оцените заказ</h4>
+<form [formGroup]="formRating" (ngSubmit)="handleSubmit()">
+    <tt-stars-control
+        formControlName="rating"
+    ></tt-stars-control>
+    <small class="invalidSubmit mt12">Поставьте оценку</small>
+    <button class="btn mt20">Отправить</button>
+</form>

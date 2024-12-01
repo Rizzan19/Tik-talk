@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -9,14 +9,15 @@ import {
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Feature, FormService } from './form.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { KeyValuePipe, DatePipe } from '@angular/common';
-import { DateTime } from 'luxon';
-import { MaskitoDirective } from '@maskito/angular';
-import type { MaskitoOptions } from '@maskito/core';
+import {Feature, FormService} from './form.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {DatePipe, KeyValuePipe} from '@angular/common';
+import {DateTime} from 'luxon';
+import {MaskitoDirective} from '@maskito/angular';
+import type {MaskitoOptions} from '@maskito/core';
 import mask from './mask';
-import { NameValidator } from './name.validator';
+import {NameValidator} from './name.validator';
+import {Router} from "@angular/router";
 
 enum DeliveryType {
   COURIER = 'COURIER',
@@ -85,6 +86,7 @@ function validateDateRange({
   imports: [ReactiveFormsModule, KeyValuePipe, DatePipe, MaskitoDirective],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormComponent {
   days = 2;
@@ -99,6 +101,7 @@ export class FormComponent {
       .toFormat('EEEE, d MMMM')
   );
 
+  router = inject(Router);
   formService = inject(FormService);
   nameValidator = inject(NameValidator);
 
@@ -191,9 +194,9 @@ export class FormComponent {
     this.form.updateValueAndValidity();
 
     if (this.form.invalid) return;
-
-    console.log(this.form.valid);
-    console.log(this.form.value);
+    if (this.form.controls.deliveryType.value === 'COURIER') {
+      this.router.navigate(['success'])
+    }
   }
 
   sort = () => 0;

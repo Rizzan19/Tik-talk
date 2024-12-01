@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 2% 30%;
+}
+
+form {
+  display: grid;
+  place-items: center;
+}
+
+.invalidSubmit {
+  display: none;
+  color: tomato;
+}
+
+tt-stars-control.ng-invalid.ng-touched + .invalidSubmit {
+  display: block;
+}
+
+
+
+
+

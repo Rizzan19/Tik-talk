@@ -1,0 +1,32 @@
+.login-input {
+  position: relative;
+}
+
+.tg-icon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  color: var(--light-color);
+  top: 50%;
+  right: 12px;
+  transform: translateY(-45%);
+}
+
+.password-input {
+  position: relative;
+}
+
+.password-eye-btn {
+  position: absolute;
+  background: none;
+  border: none;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-45%);
+  color: #ffffffbf;
+  cursor: pointer;
+}
+
+.password-eye-btn.active {
+  color: var(--primary-color);
+}

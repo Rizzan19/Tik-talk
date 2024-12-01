@@ -1,10 +1,10 @@
-import { Component, ViewChild, effect, inject } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ProfileHeaderComponent, AvatarUploadComponent } from '../../ui';
-import { ProfileService } from '@tt/data-access/profile';
-import { firstValueFrom } from 'rxjs/internal/firstValueFrom';
-import { SvgIconComponent } from '@tt/common-ui';
-import { AuthService } from "@tt/data-access/auth";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, ViewChild} from '@angular/core';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AvatarUploadComponent, ProfileHeaderComponent} from '../../ui';
+import {ProfileService} from '@tt/data-access/profile';
+import {firstValueFrom} from 'rxjs/internal/firstValueFrom';
+import {SvgIconComponent} from '@tt/common-ui';
+import {AuthService} from "@tt/data-access/auth";
 import {GlobalStoreService} from "@tt/data-access/shared";
 
 @Component({
@@ -18,6 +18,7 @@ import {GlobalStoreService} from "@tt/data-access/shared";
   ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsPageComponent {
   me = inject(GlobalStoreService).me
@@ -53,6 +54,7 @@ export class SettingsPageComponent {
     if (this.form.invalid) return;
 
     if (this.avatarUploader.avatar) {
+
       firstValueFrom(
         this.profileService.uploadAvatar(this.avatarUploader.avatar)
       );

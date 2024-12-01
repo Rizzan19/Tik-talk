@@ -1,4 +1,13 @@
-import {Component, ElementRef, HostListener, inject, input, OnInit, signal,} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  inject,
+  input,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {Post, postActions} from '@tt/data-access/posts';
 import {CommentComponent, PostInputComponent} from '../../ui';
 import {AvatarCircleComponent, DatePostPipe, SvgIconComponent} from '@tt/common-ui';
@@ -18,6 +27,7 @@ import {Store} from "@ngrx/store";
   ],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostComponent implements OnInit {
   store = inject(Store)

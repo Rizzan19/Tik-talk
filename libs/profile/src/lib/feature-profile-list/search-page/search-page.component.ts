@@ -1,11 +1,12 @@
-import { Component, ElementRef, inject, Renderer2 } from '@angular/core';
-import { selectFilteredProfiles} from '@tt/data-access/profile';
-import { ProfileCardComponent } from '../../ui';
-import { RouterLink } from '@angular/router';
-import { ProfileFiltersComponent } from '../profile-filters/profile-filters.component';
-import { AsyncPipe } from '@angular/common';
-import { audit, fromEvent, interval } from 'rxjs';
+import {ChangeDetectionStrategy, Component, ElementRef, inject, Renderer2} from '@angular/core';
+import {profileActions, selectFilteredProfiles} from '@tt/data-access/profile';
+import {ProfileCardComponent} from '../../ui';
+import {RouterLink} from '@angular/router';
+import {ProfileFiltersComponent} from '../profile-filters/profile-filters.component';
+import {AsyncPipe} from '@angular/common';
+import {audit, fromEvent, interval} from 'rxjs';
 import {Store} from "@ngrx/store";
+import {InfiniteScrollDirective} from "ngx-infinite-scroll";
 
 @Component({
   selector: 'app-search-page',
@@ -15,9 +16,11 @@ import {Store} from "@ngrx/store";
     RouterLink,
     ProfileFiltersComponent,
     AsyncPipe,
+    InfiniteScrollDirective,
   ],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchPageComponent {
   store = inject(Store);
@@ -47,5 +50,14 @@ export class SearchPageComponent {
       'height',
       `${height}px`
     );
+  }
+
+  onScroll() {
+    console.log('scroll')
+    this.timeToFetch()
+  }
+
+  timeToFetch() {
+    this.store.dispatch(profileActions.setPage({}))
   }
 }

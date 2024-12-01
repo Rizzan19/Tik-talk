@@ -1,13 +1,12 @@
-@if (message(); as message) {
-    @if (user(); as user) {
+@if (message(); as message ) {
         <app-avatar-circle
           class="size32"
-          [avatarUrl]="user.avatarUrl"
+          [avatarUrl]="message.user?.avatarUrl"
         ></app-avatar-circle>
         <div class="message-container">
           <div class="message-title mb8">
             <strong class="title-text">
-              {{ user.firstName }} {{ user.lastName }}
+              {{ message.user?.firstName }} {{ message.user?.lastName }}
             </strong>
             <strong class="regular mb8">{{ message.createdAt | date: 'HH:mm' : 'UTC+6' }}</strong>
           </div>
@@ -15,5 +14,4 @@
             {{ message.text }}
           </div>
         </div>
-    }
 }

@@ -1,8 +1,8 @@
-import {Component, ElementRef, Renderer2, inject, ViewChild} from '@angular/core';
-import { PostInputComponent } from '../../ui';
-import { PostComponent } from '../post/post.component';
+import {ChangeDetectionStrategy, Component, ElementRef, inject, Renderer2, ViewChild} from '@angular/core';
+import {PostInputComponent} from '../../ui';
+import {PostComponent} from '../post/post.component';
 import {postActions, selectPosts} from '@tt/data-access/posts';
-import { audit, fromEvent, interval } from 'rxjs';
+import {audit, fromEvent, interval} from 'rxjs';
 import {Store} from "@ngrx/store";
 
 @Component({
@@ -11,6 +11,7 @@ import {Store} from "@ngrx/store";
   imports: [PostInputComponent, PostComponent],
   templateUrl: './post-feed.component.html',
   styleUrl: './post-feed.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostFeedComponent {
   @ViewChild('postsWrapper') postsWrapper!: ElementRef

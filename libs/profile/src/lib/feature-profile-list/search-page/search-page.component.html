@@ -1,10 +1,16 @@
 <app-profile-filters></app-profile-filters>
 
-<div class="profile-card__wrapper">
+<div
+    class="profile-card__wrapper"
+    infiniteScroll
+    [infiniteScrollDistance]="3"
+    [infiniteScrollThrottle]="50"
+    [infiniteScrollContainer]="'.profile-card__wrapper'"
+    [fromRoot]="true"
+    (scrolled)="onScroll()"
+>
   @for (profile of profiles(); track profile.id) {
-      @if (profile.avatarUrl !== null) {
-  <app-profile-card [profile]="profile"></app-profile-card>
-    }
+    <app-profile-card [profile]="profile"></app-profile-card>
   }
 </div>
 

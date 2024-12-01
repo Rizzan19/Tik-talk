@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { canActivateAuth } from '@tt/data-access/auth';
 import { chatsRoutes } from '@tt/chats';
-import { FormsExperimentalComponent, FormComponent } from '@tt/experimental';
+import {FormsExperimentalComponent, FormComponent, FormSuccessComponent} from '@tt/experimental';
 import {LayoutComponent} from "@tt/layout";
 import {SearchPageComponent, ProfilePageComponent, SettingsPageComponent} from '@tt/profile';
 import {provideState} from "@ngrx/store";
@@ -44,4 +44,5 @@ export const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'experimental', component: FormsExperimentalComponent },
   { path: 'form', component: FormComponent },
+  { path: 'success', component: FormSuccessComponent }
 ];

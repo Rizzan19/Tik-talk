@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, inject, Injectable, signal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Chat, LastMessageRes, Message} from '../interfaces/chat.interface';
-import {map, Observable} from 'rxjs';
+import {firstValueFrom, map, Observable} from 'rxjs';
 import {DateTime} from 'luxon';
 import {ChatWsService} from "../interfaces/chat-ws-service.interface";
 import {AuthService} from "@tt/data-access/auth";
@@ -20,10 +20,11 @@ export class ChatsService {
 
   wsAdapter: ChatWsService = new ChatWsRxjsService()
 
+  activeChat = signal<Chat | null>(null)
   unreadMessages = signal<number>(0)
   activeChatMessages = signal<Map<string, Message[]>>(new Map())
 
-  baseApiUrl = 'https://icherniakov.ru/yt-course/'
+  baseApiUrl = '/yt-course/'
 
   connectWs() {
     return this.wsAdapter.connect({
@@ -41,21 +42,28 @@ export class ChatsService {
     }
 
     if (isNewMessage(message)) {
+      const activeChat = this.activeChat()
+      const me = this.me()
+      const activeChatMessages = this.activeChatMessages()
+      if (!activeChat || !me) return
       const day = DateTime.now().startOf('day').toISODate()
       const labelDay = this.getLabelDay(day)
 
-      if (!this.activeChatMessages().has(labelDay)) {
-          this.activeChatMessages().set(labelDay, [])
+      if (!activeChatMessages.has(labelDay)) {
+          activeChatMessages.set(labelDay, [])
       }
-      this.activeChatMessages().get(labelDay)!.push({
+      activeChatMessages.get(labelDay)!.push({
         id: message.data.id,
         userFromId: message.data.author,
         personalChatId: message.data.chat_id,
         text: message.data.message,
         createdAt: message.data.created_at,
         isRead: false,
-        isMine: true,
+        isMine: message.data.author === me.id,
+        user: message.data.author === activeChat.userFirst.id ? activeChat.userFirst : activeChat.userSecond
       })
+      const updatedMessages = new Map(activeChatMessages)
+      this.activeChatMessages.set(updatedMessages)
     }
   }
 
@@ -72,6 +80,7 @@ export class ChatsService {
   getChatById(chatId: number) {
     return this.http.get<Chat>(`${this.baseApiUrl}chat/${chatId}`).pipe(
       map((chat) => {
+        this.activeChat.set(chat)
         let patchedMessages = chat.messages.map((message) => {
           return {
             ...message,

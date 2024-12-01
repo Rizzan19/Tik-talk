@@ -1,5 +1,5 @@
-import {Component, inject, input, signal} from '@angular/core';
-import { SvgIconComponent, DndDirective } from '@tt/common-ui';
+import {ChangeDetectionStrategy, Component, input, signal} from '@angular/core';
+import {DndDirective, SvgIconComponent} from '@tt/common-ui';
 
 @Component({
   selector: 'app-avatar-upload',
@@ -7,6 +7,7 @@ import { SvgIconComponent, DndDirective } from '@tt/common-ui';
   imports: [SvgIconComponent, DndDirective],
   templateUrl: './avatar-upload.component.html',
   styleUrl: './avatar-upload.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AvatarUploadComponent {
   avatarUrl = input()

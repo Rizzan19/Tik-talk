@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {AvatarCircleComponent, ImgUrlPipe, SvgIconComponent} from '@tt/common-ui';
 import {AsyncPipe, NgForOf} from '@angular/common';
 import {SubscriberCardComponent} from './subscriber-card/subscriber-card.component';
@@ -26,6 +26,7 @@ import {isErrorMessage} from "@tt/data-access/chats/interfaces/type-guards";
     ],
     templateUrl: './sidebar.component.html',
     styleUrl: './sidebar.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent implements OnInit {
     profileService = inject(ProfileService);

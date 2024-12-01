@@ -1,0 +1,14 @@
+.star {
+  font-size: 36px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.star-rating {
+  display: flex;
+  gap: 20px
+}
+
+.star.filled {
+  color: #fde910;
+}

@@ -1,6 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
-import {profileActions, ProfileService} from '@tt/data-access/profile';
+import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import {profileActions} from '@tt/data-access/profile';
 import {debounceTime, startWith} from 'rxjs';
 import {Store} from "@ngrx/store";
 
@@ -10,6 +10,7 @@ import {Store} from "@ngrx/store";
   imports: [ReactiveFormsModule],
   templateUrl: './profile-filters.component.html',
   styleUrl: './profile-filters.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileFiltersComponent {
   fb = inject(FormBuilder);
