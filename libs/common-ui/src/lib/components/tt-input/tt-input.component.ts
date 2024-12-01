@@ -1,7 +1,7 @@
 import {Component, forwardRef, input, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule} from "@angular/forms";
-import {SvgIconComponent} from "@tt/common-ui";
+import {SvgIconComponent} from "../svg-icon/svg-icon.component";
 
 @Component({
   selector: 'tt-input',

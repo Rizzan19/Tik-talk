@@ -1,11 +1,12 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, effect, inject, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, ElementRef, inject, Renderer2, ViewChild} from '@angular/core';
 import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AvatarUploadComponent, ProfileHeaderComponent} from '../../ui';
 import {ProfileService} from '@tt/data-access/profile';
 import {firstValueFrom} from 'rxjs/internal/firstValueFrom';
-import {SvgIconComponent} from '@tt/common-ui';
+import {AddressInputComponent, StackInputComponent, SvgIconComponent} from '@tt/common-ui';
 import {AuthService} from "@tt/data-access/auth";
 import {GlobalStoreService} from "@tt/data-access/shared";
+import {audit, fromEvent, interval} from "rxjs";
 
 @Component({
   selector: 'app-settings-page',
@@ -15,16 +16,20 @@ import {GlobalStoreService} from "@tt/data-access/shared";
     ProfileHeaderComponent,
     AvatarUploadComponent,
     SvgIconComponent,
+    StackInputComponent,
+    AddressInputComponent,
   ],
   templateUrl: './settings-page.component.html',
   styleUrl: './settings-page.component.scss',
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsPageComponent {
   me = inject(GlobalStoreService).me
   authService = inject(AuthService);
   fb = inject(FormBuilder);
   profileService = inject(ProfileService);
+  hostElement = inject(ElementRef);
+  r2 = inject(Renderer2);
 
   @ViewChild(AvatarUploadComponent) avatarUploader!: AvatarUploadComponent;
 
@@ -34,6 +39,7 @@ export class SettingsPageComponent {
     username: [{ value: '', disabled: true }, Validators.required],
     description: [''],
     stack: [''],
+    city: [null],
   });
 
   constructor() {
@@ -41,8 +47,6 @@ export class SettingsPageComponent {
       //@ts-ignore
       this.form.patchValue({
         ...this.profileService.me(),
-        //@ts-ignore
-        stack: this.mergeStack(this.profileService.me()?.stack),
       });
     });
   }
@@ -64,22 +68,30 @@ export class SettingsPageComponent {
     //@ts-ignore
       this.profileService.patchProfile({
         ...this.form.value,
-        stack: this.splitStack(this.form.value.stack),
       })
+    )
+  }
+
+  ngAfterViewInit() {
+    this.resizeWindow();
+    fromEvent(window, 'resize')
+        .pipe(audit(() => interval(50)))
+        .subscribe(() => {
+          this.resizeWindow();
+        });
+  }
+
+  resizeWindow() {
+    const { top } = this.hostElement.nativeElement
+        .querySelector('.profile-form__wrapper')
+        .getBoundingClientRect();
+
+    const height = window.innerHeight - top - 30;
+
+    this.r2.setStyle(
+        this.hostElement.nativeElement.querySelector('.profile-form__wrapper'),
+        'height',
+        `${height}px`
     );
-  }
-
-  splitStack(stack: string | null | string[] | undefined): string[] {
-    if (!stack) return [];
-    if (Array.isArray(stack)) return stack;
-
-    return stack.split(',');
-  }
-
-  mergeStack(stack: string | null | string[] | undefined) {
-    if (!stack) return '';
-    if (Array.isArray(stack)) return stack.join(',');
-
-    return stack;
   }
 }

@@ -55,13 +55,17 @@
 
     <label class="tt-form-label">
       <span class="tt-form-label__text">Навыки</span>
-      <input
-        type="text"
-        class="tt-form-input"
-        placeholder="Введите данные"
+      <tt-stack-input
         formControlName="stack"
-      />
+        key="enter"
+      ></tt-stack-input>
     </label>
+      <label class="tt-form-label">
+          <span class="tt-form-label__text">Город</span>
+          <tt-address-input
+            formControlName="city"
+          ></tt-address-input>
+      </label>
   </div>
   <div class="profile-form__footer">
     <button class="profile-form__btn__exit" (click)="authService.logout()">

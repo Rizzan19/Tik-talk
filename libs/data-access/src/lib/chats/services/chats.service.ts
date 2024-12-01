@@ -24,7 +24,7 @@ export class ChatsService {
   unreadMessages = signal<number>(0)
   activeChatMessages = signal<Map<string, Message[]>>(new Map())
 
-  baseApiUrl = '/yt-course/'
+  baseApiUrl = 'https://icherniakov.ru/yt-course/'
 
   connectWs() {
     return this.wsAdapter.connect({

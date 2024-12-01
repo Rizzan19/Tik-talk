@@ -10,7 +10,7 @@ import { Profile } from '@tt/data-access/profile';
 export class ProfileService {
   http = inject(HttpClient);
   #globalStoreService = inject(GlobalStoreService)
-  baseApiUrl = '/yt-course/';
+  baseApiUrl = 'https://icherniakov.ru/yt-course/';
 
   me = signal<Profile | null>(null)
 
